@@ -1,0 +1,94 @@
+{% extends './layout.html' %}
+
+{% block title %} Searchem Tool {% endblock %}
+
+{% block nav %}
+<!-- Navigation-->
+<nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top" id="mainNav">
+    <div class="container">
+        <a href="/"><img class="navbar-brand" src="../static/icons/modified_tranparent_logo.svg" width="114" height="70" alt="..." style="margin-left: 0%;"></img></a>
+        <a class="btn btn-primary" href="/signin">Sign In</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block masthead %}
+
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container position-relative">
+        <div class="row justify-content-center">
+            <div class="col-xl-6">
+                <div class="text-center text-white">
+                    <h1 class="mb-4">Searchem Tool</h1>
+                    <h2 class="mb-0"><i>Download our presentations</i></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block body %}
+<!--Presentations-->
+<section class="features-icons bg-light">
+    <div class="container">
+        <div class="modal-signin position-static d-block" id="modalSignin">
+            <div class="row">
+                <div class="col-lg-4 my-1" href="../static/pdf/presentation1.pdf">
+                    <div class="modal-content rounded shadow">
+                        <label for="st1" class="offset-1 mt-3 row">
+                            <a href="../static/pdf/presentation1.pdf" class="text-center"><img src="../static/images/crop-transparent-logo.png" width="m-auto" height="90" alt="..."/></a>
+                        </label>
+                        <div class="row">
+                            <div class="col ms-2">
+                                <a href="../static/pdf/presentation1.pdf"><h4 style="color: #212529;"  class="text-center">January 18th: initial idea</h4></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 my-1">
+                    <div class="modal-content rounded shadow">
+                        <label for="st1" class="offset-1 mt-3">
+                            <h4><input class="me-2 cb2" type="checkbox" id="st1" value="1">Molecule/Target</h4> 
+                        </label>
+                        <hr style="width: 98%;" class="my-7 ms-2">
+                        <div class="row">
+                            <div class="col ms-2">
+                                <h6>Activity</h6>
+                            </div>
+                            <div class="col ms-2">
+                                <h6>Brand</h6>
+                            </div>
+                            <div class="col me-sm-1">
+                                <p>Link</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 my-1">
+                    <div class="modal-content rounded shadow">
+                        <label for="st1" class="offset-1 mt-3">
+                            <h4><input class="me-2 cb2" type="checkbox" id="st1" value="1">Molecule/Target</h4> 
+                        </label>
+                        <hr style="width: 98%;" class="my-7 ms-2">
+                        <div class="row">
+                            <div class="col ms-2">
+                                <h6>Activity</h6>
+                            </div>
+                            <div class="col ms-2">
+                                <h6>Brand</h6>
+                            </div>
+                            <div class="col me-sm-1">
+                                <p>Link</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+</html>

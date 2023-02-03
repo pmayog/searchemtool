@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Results</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="images/crop-transparent-logo.png" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top" id="mainNav">
+            <div class="container">
+                <a href="user.html"><img class="navbar-brand" src="icons/modified_tranparent_logo.svg" width="114" height="70" alt="..."></img></a>
+                <button class="btn btn-primary navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    User
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="favourites.html">Favourites</a></li>
+                        <li class="nav-item"> <link href="icons/right-from-bracket-solid.svg"/><a class="nav-link" href="index.html">Log out</a></li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container position-relative">
+                <div class="row justify-content-center cb1">
+                    <div class="col-xl-6">
+                        <div class="text-center text-white">
+                            <!-- Page heading-->
+                            <h1 class="mb-5">Searchem Tool</h1>
+                            <!-- Signup form-->
+                            <form class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                <!-- Email address input-->
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control form-control-lg" id="emailAddress" type="email" placeholder="Search in Searchem Tool" data-sb-validations="required,email" />
+                                    </div>
+                                    <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
+                                </div>
+                                <h1></h1>
+                                <p></p>
+                                <div class="checkbox mb-3 text-white">
+                                    <label>
+                                        <input type="checkbox" value="agonist"> Agonist
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" value="antagonist" class="ms-3"> Antagonist
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input type="checkbox" value="fisher"> Fisher Scientific 
+                                    </label>
+                                    <label>
+                                       <input type="checkbox" value="selleckchem" class="ms-3"> Selleckchem  
+                                    <label>
+                                          <input type="checkbox" value="sigma" class="ms-3"> Sigma-Aldrich
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Icons Grid-->
+        <section class="features-icons bg-light">
+            <div class="container">
+                <div class="modal-signin position-static d-block" id="modalSignin">
+                    <div >
+                        <div class="modal-content rounded shadow">
+                            <label for="st1" class="offset-1 mt-3">
+                                <h4><input class="me-2 cb2" type="checkbox" id="st1" value="1">Molecule/Target</h4> 
+                            </label>
+                            <hr style="width: 98%;" class="my-7 ms-2">
+                            <div class="row">
+                                <div class="col ms-2">
+                                    <h6>Activity</h6>
+                                </div>
+                                <div class="col ms-2">
+                                    <h6>Brand</h6>
+                                </div>
+                                <div class="col me-sm-1">
+                                    <p>Link</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+                        <ul class="list-inline mb-2">
+                            <li class="list-inline-item"><a href="#!">About</a></li>
+                            <li class="list-inline-item">⋅</li>
+                            <li class="list-inline-item"><a href="#!">Contact</a></li>
+                            <li class="list-inline-item">⋅</li>
+                            <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
+                            <li class="list-inline-item">⋅</li>
+                            <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
+                        </ul>
+                        <p class="text-muted small mb-4 mb-lg-0">&copy; Searchem Tool 2023. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item me-4">
+                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
+                            </li>
+                            <li class="list-inline-item me-4">
+                                <a href="#!"><i class="bi-twitter fs-3"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#!"><i class="bi-instagram fs-3"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="js/checkout.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
