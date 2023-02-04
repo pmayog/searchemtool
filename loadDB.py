@@ -74,57 +74,6 @@ for provider in PROVIDERS:
 print("ok")
 ##
 ##
-
-print("Molecules...")
-
-MOLECULES = {}
-target_has_molecule = {}
-sthMolecule = "INSERT INTO molecule (chembl_id, name, formula, type) VALUES (%s,%s,%s,%s)"
-sthTargetMolecule = "INSERT INTO target_has_molecule (target_uniprot_id, molecule_chembl_id, reference_id, type_of_activity) VALUES (%s,%s,%s,%s)"
-with open ("chembl_31.sdf", 'r') as CHEMBL:
-    for line in CHEMBL:
-        line = line.strip()
-        if line.startswith("CHEMBL"):
-            molecule = line
-        else:
-            continue
-        response_API_mol = requests.get('https://www.ebi.ac.uk/chembl/api/data/molecule/'+molecule+'.json')
-        response_json_mol = response_API_mol.json() 
-        molecule_name = response_json_mol["pref_name"]
-        molecule_formula = response_json_mol["molecule_properties"]["full_molformula"]
-        molecule_type = response_json_mol["molecule_type"]
-        if molecule_type == 'Small molecule':
-            if molecule_name != None:
-                if molecule not in MOLECULES:
-                    with connection.cursor() as c:
-                        c.execute(sthMolecule, (molecule, molecule_name, molecule_formula,
-                                                molecule_type))
-                        molecule_id = c.lastrowid
-                        MOLECULES[molecule] = molecule_id
-                for organism in organisms_list:
-                    response_API_act = requests.get('https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id='+molecule)
-                    response_json_act = response_API_act.json()
-                    response_text_act = json.dumps(response_json_act, sort_keys=True, indent=4)
-                    print(response_text_act)  
-                    if response_json_act["mechanisms"]:
-                        target = response_json_act["mechanisms"][0]["target_chembl_id"]
-                        if target in target_conversion:
-                            target = target_conversion[target]
-                            reference = response_json_act["mechanisms"][0]["mechanism_refs"][0]["ref_url"]
-                            activity = response_json_act["mechanisms"][0]["action_type"]
-                            if activity == 'AGONIST' or activity == 'ANTAGONIST':
-                                thm = "{}{}".format(molecule, target)
-                                if thm not in target_has_molecule:
-                                    with connection.cursor() as c:
-                                        c.execute(sthTargetMolecule, (target, molecule, reference, activity))
-                                        target_has_molecule[thm] = True
-
-print("ok")
-
-exit()
-
-##
-##
 print ("Targets...")
 
 TARGETS = {}
@@ -152,6 +101,53 @@ with open ("uniprot_sprot.dat", 'r') as SWISSPROT:
                         c.execute(sthTarget, (target, target_name, target_organism))
                         target_id = c.lastrowid
                         TARGETS[target] = target_id
+
+print("ok")
+##
+##
+print("Molecules...")
+
+MOLECULES = {}
+target_has_molecule = {}
+sthMolecule = "INSERT INTO molecule (chembl_id, name, formula, type) VALUES (%s,%s,%s,%s)"
+sthTargetMolecule = "INSERT INTO target_has_molecule (target_uniprot_id, molecule_chembl_id, reference_id, type_of_activity) VALUES (%s,%s,%s,%s)"
+with open ("chembl_31.sdf", 'r') as CHEMBL:
+    for line in CHEMBL:
+        line = line.strip()
+        if line.startswith("CHEMBL"):
+            molecule = line
+        else:
+            continue
+        response_API_mol = requests.get('https://www.ebi.ac.uk/chembl/api/data/molecule/'+molecule+'.json')
+        response_json_mol = response_API_mol.json() 
+        molecule_name = response_json_mol["pref_name"]
+        molecule_formula = response_json_mol["molecule_properties"]["full_molformula"]
+        molecule_type = response_json_mol["molecule_type"]
+        if molecule_type == 'Small molecule':
+            if molecule_name != None:
+                if molecule not in MOLECULES:
+                    with connection.cursor() as c:
+                        c.execute(sthMolecule, (molecule, molecule_name, molecule_formula,
+                                                molecule_type))
+                        molecule_id = c.lastrowid
+                        MOLECULES[molecule] = molecule_id
+                for organism in organisms_list:
+                    response_API_act = requests.get('https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id='+molecule+'&limit=1')
+                    response_json_act = response_API_act.json()
+                    response_text_act = json.dumps(response_json_act, sort_keys=True, indent=4)
+                    print(response_text_act)  
+                    if response_json_act["mechanisms"]:
+                        target = response_json_act["mechanisms"][0]["target_chembl_id"]
+                        if target in target_conversion:
+                            target = target_conversion[target]
+                            reference = response_json_act["mechanisms"][0]["mechanism_refs"][0]["ref_url"]
+                            activity = response_json_act["mechanisms"][0]["action_type"]
+                            if activity == 'AGONIST' or activity == 'ANTAGONIST':
+                                thm = "{}{}".format(molecule, target)
+                                if thm not in target_has_molecule:
+                                    with connection.cursor() as c:
+                                        c.execute(sthTargetMolecule, (target, molecule, reference, activity))
+                                        target_has_molecule[thm] = True
 
 print("ok")
 ##
