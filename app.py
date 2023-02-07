@@ -22,7 +22,6 @@ def index():
 @app.route('/results', methods=["POST", "GET"])
 def results():
     search = request.form.get("search")
-    #search="no"
     #agonist = request.form.get("agonsit")
     #antagonist = request.form.get("antagonist")
     #fisher = request.form.get("fisher")
@@ -42,13 +41,32 @@ def results():
         #print(len(data.get('message')))
     return render_template('output.html', search=data)
 
-@app.route('/user/<username>/favourites')
-def favourites(username):
-    return render_template('favourites.html', name=username)
+@app.route('/<user>/result', methods=["POST", "GET"])
+def result(user):
+    search_user = request.form.get("search_user")
+    data={}
+    try:
+        cursor=conection.connection.cursor()
+        sql="SELECT privilege_type FROM user_privileges WHERE is_grantable='"+search_user+"';"
+        cursor.execute(sql)
+        activity=cursor.fetchall()
+        cursor.close()
+        data['message']=activity
+    except Exception as e:
+        #error=No results found'
+        data['message']='no_result'
+        #print(len(data.get('message')))
+    return render_template('output_user.html', name=user, search_user=data)
 
-@app.route('/user/<username>')
-def user(username):
-    return render_template('user.html', name=username)
+
+@app.route('/<user>/favourites', methods=["POST", "GET"])
+def favourites(user):
+    return render_template('favourites.html', name=user)
+
+
+@app.route('/<user>', methods=["POST", "GET"])
+def user(user):
+    return render_template('user.html', name=user)
 
 def page_not_found(error):
     return render_template('404.html'), 404
