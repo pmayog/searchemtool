@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_mysqldb import MySQL
+from datetime import datetime
 
 
 app=Flask(__name__)
@@ -8,7 +9,7 @@ app=Flask(__name__)
 app.config['MYSQL_HOST']= 'localhost'
 app.config['MYSQL_USER']= 'root'
 app.config['MYSQL_PASSWORD']= 'Pamagon2000*'
-app.config['MYSQL_DB']= 'chembl_31'
+app.config['MYSQL_DB']= 'information_schema'
 
 conection = MySQL(app)
 
@@ -17,6 +18,29 @@ conection = MySQL(app)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/results', methods=["POST", "GET"])
+def results():
+    search = request.form.get("search")
+    #search="no"
+    #agonist = request.form.get("agonsit")
+    #antagonist = request.form.get("antagonist")
+    #fisher = request.form.get("fisher")
+    #selleckchem = request.form.get("selleckchem")
+    #sigma = request.form.get("sigma")
+    data={}
+    try:
+        cursor=conection.connection.cursor()
+        sql="SELECT privilege_type FROM user_privileges WHERE is_grantable='"+search+"';"
+        cursor.execute(sql)
+        activity=cursor.fetchall()
+        cursor.close()
+        data['message']=activity
+    except Exception as ex:
+        #error=No results found'
+        data['message']='no_result'
+        #print(len(data.get('message')))
+    return render_template('output.html', search=data)
 
 @app.route('/user/<username>/favourites')
 def favourites(username):
@@ -40,21 +64,6 @@ def signup():
 @app.route('/presentations')
 def presentations():
     return render_template('presentations.html')
-
-@app.route('/activity')
-def activity():
-    data={}
-    try:
-        cursor=conection.connection.cursor()
-        sql="SELECT activity_id FROM activities WHERE activity_id='31863';"
-        cursor.execute(sql)
-        activity=cursor.fetchall()
-        cursor.close()
-        data['activity']=activity
-        data['message']='Well done!'
-    except Exception as ex:
-        data['message']='Error...'
-    return jsonify(data)
 
 def query_string():
     print(request)
