@@ -6,14 +6,14 @@
 <!-- Navigation-->
 <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top" id="mainNav">
     <div class="container">
-        <a href="/user/{{ name }}"><img class="navbar-brand" src="../static/icons/modified_tranparent_logo.svg" width="114" height="70" alt="..."></img></a>
+        <a href="/{{ name }}"><img class="navbar-brand" src="../static/icons/modified_tranparent_logo.svg" width="114" height="70" alt="..."></img></a>
         <button class="btn btn-primary navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             {{ name }}
             <i class="fas fa-bars ms-1"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="/user/{{ name }}/favourites">Favourites</a></li>
+                <li class="nav-item"><a class="nav-link" href="/{{ name }}/favourites">Favourites</a></li>
                 <li class="nav-item"> <link href="../static/icons/right-from-bracket-solid.svg"/><a class="nav-link" href="/">Log out</a></li>
             </ul>
         </div>
@@ -33,11 +33,11 @@
                     <!-- Page heading-->
                     <h1 class="mb-5">Searchem Tool</h1>
                     <!-- Signup form-->
-                    <form class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                    <form action="/{{ name }}/result" method="post" class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
                         <!-- Email address input-->
                         <div class="row">
                             <div class="col">
-                                <input activity class="form-control form-control-lg" id="emailAddress" name="search" placeholder="Search in Searchem Tool" data-sb-validations="required,email" />
+                                <input class="form-control form-control-lg" name="search_user" type="text" placeholder="Search in Searchem Tool" />
                             </div>
                             <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
                         </div>
@@ -131,3 +131,4 @@
                 </section>
           {% endblock %}
             </body>
+
