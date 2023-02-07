@@ -33,11 +33,11 @@
                     <!-- Page heading-->
                     <h1 class="mb-5">Searchem Tool</h1>
                     <!-- Signup form-->
-                    <form action="/result" method="post" class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                    <form action="/{{ name }}/result" method="post" class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
                       <!-- Email address input-->
                       <div class="row">
                           <div class="col">
-                              <input class="form-control form-control-lg" name="search_name" type="text" placeholder="Search in Searchem Tool" />
+                              <input class="form-control form-control-lg" name="search_user" type="text" placeholder="Search in Searchem Tool" />
                           </div>
                           <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
                       </div>
@@ -144,8 +144,8 @@
 
         <!-- Icons Grid-->
         <section class="bg-light">
-        {% for v in search %}
-            {% for r in search[v] %}
+        {% for v in search_user %}
+            {% for r in search_user[v] %}
                 {% for s in r %}
                     {% if search == 'no_result' %}
                     <div class="container text-center my-0">
