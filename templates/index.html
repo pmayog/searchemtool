@@ -23,11 +23,11 @@
                     <!-- Page heading-->
                     <h1 class="mb-5">Searchem Tool</h1>
                     <!-- Signup form-->
-                    <form class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                    <form action="/results" method="post" class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
                         <!-- Email address input-->
                         <div class="row">
                             <div class="col">
-                                <input class="form-control form-control-lg" id="emailAddress" type="email" placeholder="Search in Searchem Tool" data-sb-validations="required,email" />
+                                <input class="form-control form-control-lg" type="text" name="search" placeholder="Search in Searchem Tool" />
                             </div>
                             <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
                         </div>
@@ -35,19 +35,19 @@
                         <p></p>
                         <div class="checkbox mb-3 text-white">
                             <label>
-                                <input type="checkbox" value="agonist"> Agonist
+                                <input type="checkbox" name="agonist"> Agonist
                             </label>
                             <label>
-                                <input type="checkbox" value="antagonist" class="ms-3"> Antagonist
+                                <input type="checkbox" name="antagonist" class="ms-3"> Antagonist
                             </label>
                             <p></p>
                             <label>
-                                <input type="checkbox" value="fisher"> Fisher Scientific 
+                                <input type="checkbox" name="fisher"> Fisher Scientific 
                             </label>
                             <label>
-                               <input type="checkbox" value="selleckchem" class="ms-3"> Selleckchem  
+                               <input type="checkbox" name="selleckchem" class="ms-3"> Selleckchem  
                             <label>
-                                  <input type="checkbox" value="sigma" class="ms-3"> Sigma-Aldrich
+                                  <input type="checkbox" name="sigma" class="ms-3"> Sigma-Aldrich
                             </label>
                         </div>
                     </form>
@@ -95,16 +95,16 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="../static/images/paula.jpg" alt="..." />
+                            <img class="img-fluid rounded-circle mb-3" src="../static/images/maria.jpg" alt="..." />
                             <h5>Maria Franquesa</h5>
-                            <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
+                            <p class="font-weight-light mb-0">Graduated in Biotechnology at Universitat de Barcelona.</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="../static/images/paula.jpg" alt="..." />
+                            <img class="img-fluid rounded-circle mb-3" src="../static/images/raquel.png" alt="..." />
                             <h5>Raquel Parrondo</h5>
-                            <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
+                            <p class="font-weight-light mb-0">Graduated in Biotechnology at Universitat de Barcelona.</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -122,4 +122,5 @@
         </section>
   {% endblock %}
     </body>
+
 
