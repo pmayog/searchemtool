@@ -1,0 +1,198 @@
+{% extends './layout.html' %}
+
+{% block title %} Searchem Tool - {{ name }} {% endblock %}
+
+{% block nav %}
+<!-- Navigation-->
+<nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top" id="mainNav">
+    <div class="container">
+        <a href="/user/{{ name }}"><img class="navbar-brand" src="../../static/icons/modified_tranparent_logo.svg" width="114" height="70" alt="..."></img></a>
+        <button class="btn btn-primary navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            {{ name }}
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/user/{{ name }}/favourites">Favourites</a></li>
+                <li class="nav-item"> <link href="../static/icons/right-from-bracket-solid.svg"/><a class="nav-link" href="/">Log out</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+
+{% block masthead %}
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container position-relative">
+        <div class="row justify-content-center cb1">
+            <div class="col-xl-6">
+                <div class="text-center text-white">
+                    <!-- Page heading-->
+                    <h1 class="mb-5">Searchem Tool</h1>
+                    <!-- Signup form-->
+                    <form action="/result" method="post" class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                      <!-- Email address input-->
+                      <div class="row">
+                          <div class="col">
+                              <input class="form-control form-control-lg" name="search_name" type="text" placeholder="Search in Searchem Tool" />
+                          </div>
+                          <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
+                      </div>
+                      <h1></h1>
+                      <p></p>
+                        <div class="checkbox mb-3 text-white">
+                            <label>
+                                <input type="checkbox" value="agonist"> Agonist
+                            </label>
+                            <label>
+                                <input type="checkbox" value="antagonist" class="ms-3"> Antagonist
+                            </label>
+                            <p></p>
+                            <label>
+                                <input type="checkbox" value="fisher"> Fisher Scientific 
+                            </label>
+                            <label>
+                               <input type="checkbox" value="selleckchem" class="ms-3"> Selleckchem  
+                            <label>
+                                  <input type="checkbox" value="sigma" class="ms-3"> Sigma-Aldrich
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+{% block body %}
+<style>
+
+    :root {
+        --color-blue: rgb(78, 101, 203);
+        --color-purple: rgb(113, 75, 128);
+        --color-pink: rgb(203, 66, 116);
+        --transition-time: 10ms;
+        --transition-ease: cubic-bezier(0.1, 0.7, 0.8, 0.3);
+      }
+      
+      .toggle {
+        display: flex;
+        width: 10%;
+        height: 10%;
+        place-items: center;
+        place-content: center;
+      }
+      
+      #heart-check {
+        visibility: hidden;
+      }
+      
+      #heart {
+        cursor: pointer;
+      }
+      #heart svg {
+        width: 50px;
+      }
+
+      #heart #initial {
+        stroke-width: 1.5;
+        stroke: var(--color-pink);
+        fill: transparent;
+      }
+      
+      #heart-check:checked + #heart #initial {
+        display: none;
+      }
+      #heart-check:checked + #heart #stroke {
+        animation: stroke var(--transition-time) var(--transition-ease);
+        animation-fill-mode: forwards;
+      }
+      
+      @keyframes heart {
+        from {
+          transform: scale(1);
+        }
+        78% {
+          transform: scale(1.25);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+      @keyframes stroke {
+        from {
+          stroke: var(--color-blue);
+          fill: transparent;
+        }
+        50% {
+          stroke: var(--color-purple);
+        }
+        85% {
+          fill: transparent;
+        }
+        to {
+          stroke-dashoffset: 0;
+          stroke: var(--color-pink);
+          fill: var(--color-pink);
+        }
+      }
+    
+</style>
+
+        <!-- Icons Grid-->
+        <section class="bg-light">
+        {% for v in search %}
+            {% for r in search[v] %}
+                {% for s in r %}
+                    {% if search == 'no_result' %}
+                    <div class="container text-center my-0">
+                        <h5 class="text-muted">Sorry, any result has been found</h5>
+                    </div>
+                    {% endif %}
+                    <div class="container my-1">
+                        <div class="modal-signin position-static d-block my-2" id="modalSignin">
+                            <div>
+                                <div class="modal-content rounded shadow">
+                                    <div class="row mt-2" style="align-items: center; align-content: center;">
+                                        <div class="col  ms-3">
+                                            <h3>{{ s|capitalize }}</h3>
+                                        </div>
+                                        <div class="col-auto mt-1">
+                                                <input type="checkbox" id="heart-check" name="fav.{{ s }}"> 
+                                                <label for="heart-check" id="heart">
+                                                    <svg viewBox="0 0 50 45" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                                        <path id="initial" d="M11.8189091,20.3167303 C17.6981818,16.5505143 20.6378182,12.5122542 20.6378182,8.20195014 C20.6378182,5.99719437 18.8550242,4 16.3283829,4 C13.777264,4 12.5417153,6.29330284 11.8189091,6.29330284 C11.0961029,6.29330284 10.1317157,4 7.30943526,4 C4.90236126,4 3,5.64715533 3,8.20195014 C3,12.5122346 5.93963637,16.5504946 11.8189091,20.3167303 Z"></path>
+                                                        <path id="stroke" fill="none" d="M11.8189091,20.3167303 C17.6981818,16.5505143 20.6378182,12.5122542 20.6378182,8.20195014 C20.6378182,5.99719437 18.8550242,4 16.3283829,4 C13.4628072,4 10.284995,6.64162063 10.284995,8.70392731 C10.284995,10.0731789 10.8851209,10.9874447 11.8189091,10.9874447 C12.7526973,10.9874447 13.3528232,10.0731789 13.3528232,8.70392731 C13.3528232,6.64162063 10.1317157,4 7.30943526,4 C4.90236126,4 3,5.64715533 3,8.20195014 C3,12.5122346 5.93963637,16.5504946 11.8189091,20.3167303 Z"></path>
+                                                    </svg>
+                                                </label>
+                                        </div> 
+                                    </div>    
+                                    <hr style="width: 98%;" class="mt-0 ms-2">
+                                    <div class="row text-center" style="align-items: start;">
+                                        <div class="col ms-2 mb-2">
+                                            <h6>Activity</h6>
+                                        </div>
+                                        <div class="col ms-2 mb-2">
+                                            <h6>Brand</h6>
+                                        </div>
+                                        <div class="col mb-2 ms-auto">
+                                            <div href="https://www.canva.com" target="_blank"><img style="height: 8%; width: 8%;" src="../static/icons/cart.png"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </section>
+        {% endfor %}
+        
+        
+
+        
+{% endblock %}
+</html>
