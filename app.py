@@ -37,7 +37,7 @@ def results():
         data['message']=activity
     except Exception as ex:
         #error=No results found'
-        data['message']='no_result'
+        data['message']=''
         #print(len(data.get('message')))
     return render_template('output.html', search=data)
 
