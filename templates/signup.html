@@ -64,6 +64,14 @@
       padding-bottom: 30%;
       width: 100%;
       }
+
+      .alert {
+            padding: 10px;
+            margin: 6px;
+            color: #970020;
+            background-color: #ffd5de;
+        }
+
     </style>
 
 
@@ -80,28 +88,33 @@
                   <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
                 </div>
     
-                <div class="modal-body p-5 pt-0">
-                  <form class="">
+                <div class="modal-body p-5 pt-0"> 
+            <form method="POST">
                     <div class="form-floating mb-3">
-                      <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                      <input type="text" class="form-control rounded-3" id="floatingInput" name="firstname" placeholder="firstname">
                       <label for="floatingInput">First name</label>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                      <input type="text" class="form-control rounded-3" id="floatingInput" name="lastname" placeholder="lastname">
                       <label for="floatingInput">Last name</label>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                      <input type="text" class="form-control rounded-3" id="floatingInput" placeholder="Username" name="username">
                       <label for="floatingInput">Username</label>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                      <input type="email" class="form-control rounded-3" name="email" id="floatingInput" placeholder="name@example.com">
                       <label for="floatingInput">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
+                      <input type="password" class="form-control rounded-3" name="password" id="floatingPassword" placeholder="Password">
                       <label for="floatingPassword">Password</label>
                     </div>
+
+                    {% for message in get_flashed_messages() %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
                     <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
                     <hr class="my-4">
