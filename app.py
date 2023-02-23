@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
-from datetime import datetime
+import bcrypt
+from datetime import datetime, timedelta
 from googlesearch import search
 
 
@@ -11,17 +12,28 @@ app.config['MYSQL_HOST']= 'localhost'
 app.config['MYSQL_USER']= 'root'
 app.config['MYSQL_PASSWORD']= 'Pamagon2000*'
 app.config['MYSQL_DB']= 'searchemtool'
+app.config['SECRET_KEY']='pedrosehacaido'
+app.config['PERMANENT_SESSION_LIFETIME']=timedelta(minutes=30)
+global COOKIE_TIME_OUT  
 
 conection = MySQL(app)
+
+COOKIE_TIME_OUT=(60*30)
+    
 
 
 #Defining routes (aka barritas de la url)
 @app.route('/')
 def index():
+    session.pop('_flasher', None)
+    if 'email' in session or 'username' in session:
+       session.clear
+
     return render_template('index.html')
 
 @app.route('/results', methods=["POST", "GET"])
 def results():
+    session.pop('_flasher', None)
     mol = request.form.get("search")
     agonist = request.form.get("agonsit")
     antagonist = request.form.get("antagonist")
@@ -32,6 +44,9 @@ def results():
     data={}
     role=[]
     brands=[] 
+    
+    if 'email' in session or 'username' in session:
+       session.clear
     
     if agonist == 'on':
         role.append ('AGONIST')
@@ -82,7 +97,7 @@ def results():
     return render_template('output.html', mol=data, brands=brands)
 
 
-@app.route('/<user>', methods=["POST", "GET"])
+@app.route('/<user>', methods=["POST", 'GET'])
 def user(user):
     return render_template('user.html', name=user)
 
@@ -158,13 +173,87 @@ def favourites(user):
 def page_not_found(error):
     return render_template('404.html'), 404
 
-@app.route('/signin')
-def signin():
-    return render_template('sign_in.html')
+def method_not_allowed(error):
+    return render_template('404.html'), 405
 
-@app.route('/signup')
+@app.route('/signin', methods=['GET','POST'])
+def signin():
+    if request.method == 'GET':
+        return render_template('sign_in.html')
+    else:
+
+        username_email="'"+request.form['enter']+"'"
+        password="'"+request.form['password']+"'"
+
+        sql='SELECT * FROM user WHERE (user.user_id=%s OR user.email=%s) AND (user.password=%s);' %(username_email,username_email, password)
+        cur= conection.connection.cursor()
+        cur.execute(sql)
+        user_info=cur.fetchone()
+        cur.close
+
+        if user_info==None:
+            conection.connection.Error
+            flash('Incorrect User/email or password')
+            return render_template('sign_in.html')
+        else:
+            session['username']= user_info[0]
+            session['email']= user_info[3]
+            return redirect(url_for('user', user=session['username']))
+         
+        
+        
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+    
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    if request.method == 'GET':
+        return render_template('signup.html')
+    else:
+        try:
+            firstname="'"+request.form['firstname']+"'"
+            lastname="'"+request.form['lastname']+"'"
+            username="'"+request.form['username']+"'"
+            email="'"+request.form['email']+"'"
+            password="'"+request.form['password']+"'"
+
+            if len(firstname)==2 or len(lastname)==2 or len(username)==2 or len(email)==2 or len(password)==2:
+                flash('Sorry, all fields are mandatory')
+                return render_template('signup.html')
+                
+            
+            else:
+                try:
+                    sql='SELECT email FROM user WHERE user.email=%s' %(email)
+                    cur= conection.connection.cursor()
+                    err=conection.connection.Error
+                    cur.execute(sql)
+                    new_email=cur.fetchone()
+                    cur.close
+                    flash('Sorry, email address or username already exists')
+                    return render_template('signup.html')
+
+
+                except err:
+                    sql='INSERT INTO user (user_id, first_name, last_name, email, password) VALUES (%s,%s,%s,%s,%s);' %(username,firstname,lastname,email,password)
+                    cur=conection.connection.cursor()
+                    err2=conection.connection.Error
+                    cur.execute(sql)
+                    conection.connection.commit()
+                    session['username']=username[1:-1]
+                    session['email']=email[1:-1]
+                    return redirect(url_for('user', user=username[1:-1]))
+                
+        
+        except err2:
+            flash('Sorry, email address or username already exists')
+            return render_template('signup.html')
+
 
 @app.route('/presentations')
 def presentations():
@@ -180,4 +269,5 @@ def query_string():
 if __name__=='__main__':
     app.add_url_rule('/query_string', view_func=query_string)
     app.register_error_handler(404, page_not_found)
+    app.register_error_handler(405, method_not_allowed)
     app.run(debug=True,port=5000)
