@@ -69,6 +69,13 @@
       padding-bottom: 30%;
       width: 100%;
       }
+
+      .alert {
+            padding: 10px;
+            margin: 6px;
+            color: #970020;
+            background-color: #ffd5de;
+        }
     </style>
 
 
@@ -86,15 +93,19 @@
                 </div>
     
                 <div class="modal-body p-5 pt-0">
-                  <form class="">
+                  <form method="POST">
                     <div class="form-floating mb-3">
-                      <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                      <input type="text" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com" name="enter">
                       <label for="floatingInput">Username or email address</address></label>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                      <input type="password" name="password" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
                       <label for="floatingInput">Password</label>
                     </div>
+                    {% for message in get_flashed_messages() %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign in</button>
                     <hr class="my-4">
                     <div class="checkbox mb-3 cb1">
@@ -107,6 +118,7 @@
                   <p class="mt-5 mb-3 text-muted">Copyright &copy; Searchem Tool 2023</p>
 
                 </div>
+                
           </form>
         </main>
   </header>
