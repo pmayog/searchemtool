@@ -39,32 +39,33 @@
                             <div class="col">
                                 <input class="form-control form-control-lg" name="search_user" type="text" placeholder="Search in Searchem Tool" />
                             </div>
-                            <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
+                            <div class="col-auto"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Search</button></div>
                         </div>
                         <h1></h1>
                         <p></p>
                         <div class="checkbox mb-3 text-white">
+                            <p class="text-white">Searching for molecules by default, otherwise mark the target option</p>
                             <label>
-                                <input type="checkbox" name="molecule"> Molecule
+                                <input type="radio" name="molecule" checked> Molecule
                             </label>
                             <label>
-                                <input type="checkbox" name="target" class="ms-3"> Target
-                            </label>
-                            <p></p>
-                            <label>
-                                <input type="checkbox" value="agonist"> Agonist
-                            </label>
-                            <label>
-                                <input type="checkbox" value="antagonist" class="ms-3"> Antagonist
+                                <input type="radio" name="target" class="ms-3"> Target
                             </label>
                             <p></p>
                             <label>
-                                <input type="checkbox" value="fisher"> Fisher Scientific 
+                                <input type="checkbox" name="agonist"> Agonist
                             </label>
                             <label>
-                               <input type="checkbox" value="selleckchem" class="ms-3"> Selleckchem  
+                                <input type="checkbox" name="antagonist" class="ms-3"> Antagonist
+                            </label>
+                            <p></p>
                             <label>
-                                  <input type="checkbox" value="sigma" class="ms-3"> Sigma-Aldrich
+                                <input type="checkbox" name="fisher"> Fisher Scientific 
+                            </label>
+                            <label>
+                               <input type="checkbox" name="selleckchem" class="ms-3"> Selleckchem  
+                            <label>
+                                  <input type="checkbox" name="sigma" class="ms-3"> Sigma-Aldrich
                             </label>
                         </div>
                     </form>
@@ -138,3 +139,4 @@
                 </section>
           {% endblock %}
             </body>
+
