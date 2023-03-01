@@ -29,11 +29,19 @@
                             <div class="col">
                                 <input class="form-control form-control-lg" type="text" name="search" placeholder="Search in Searchem Tool" />
                             </div>
-                            <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
+                            <div class="col-auto"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Search</button></div>
                         </div>
                         <h1></h1>
                         <p></p>
                         <div class="checkbox mb-3 text-white">
+                            <p class="text-white">Searching for molecules by default, otherwise mark the target option</p>
+                            <label> 
+                                <input type="radio" name="radio" value="molecule" checked> Molecule
+                              </label>
+                              <label>
+                                  <input type="radio" name="radio" value="target" class="ms-3"> Target
+                              </label>
+                              <p></p>
                             <label>
                                 <input type="checkbox" name="agonist"> Agonist
                             </label>
