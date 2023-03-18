@@ -24,34 +24,8 @@
 
                 <!-- Footer-->
                 <footer class="footer bg-light">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                                <ul class="list-inline mb-2">
-                                    <li class="list-inline-item"><a href="#!">About</a></li>
-                                    <li class="list-inline-item">⋅</li>
-                                    <li class="list-inline-item"><a href="#!">Contact</a></li>
-                                    <li class="list-inline-item">⋅</li>
-                                    <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-                                    <li class="list-inline-item">⋅</li>
-                                    <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
-                                </ul>
-                                <p class="text-muted small mb-4 mb-lg-0">&copy; Searchem Tool 2023. All Rights Reserved.</p>
-                            </div>
-                            <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-                                <ul class="list-inline mb-0">
-                                    <li class="list-inline-item me-4">
-                                        <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                                    </li>
-                                    <li class="list-inline-item me-4">
-                                        <a href="#!"><i class="bi-twitter fs-3"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#!"><i class="bi-instagram fs-3"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="container text-center">
+                        <p class="text-muted small mb-4 mb-lg-0">&copy; Searchem Tool 2023. All Rights Reserved.</p>
                     </div>
                 </footer>
                 <!-- Bootstrap core JS-->
@@ -63,6 +37,22 @@
                 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
                 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
                 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+                <script>
+                  // Get all the checkboxes with name 'heart-check'
+                    var checkboxes = document.getElementsByName('heart-check');
+
+                    // Loop through the checkboxes and add an event listener to each one
+                    for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].addEventListener('change', function() {
+                        // Do something when the checkbox is checked or unchecked
+                        if (this.checked) {
+                        console.log(this.value + ' is checked');
+                        } else {
+                        console.log(this.value + ' is unchecked');
+                        }
+                    });
+                    }
+                </script>
           
     </body>
 </html>

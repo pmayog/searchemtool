@@ -43,6 +43,7 @@ def results():
     selleckchem = request.form.get("selleckchem")
     sigma = request.form.get("sigma")
     type = request.form.get("type")
+    session['type'] = type
     data={}
     role=[]
     brands=[] 
@@ -83,6 +84,7 @@ def results():
         activity=cursor.fetchall()
         activity=[list(x) for x in activity]
         cursor.close()
+        print(activity)
         
         counter=0
         for a in activity :
@@ -92,7 +94,6 @@ def results():
                     link = result
                     activity[counter].append(link)
             counter += 1
-
         data['message']=activity
     except Exception as ex:
         data['message']=''
@@ -118,6 +119,7 @@ def result(user):
     selleckchem = request.form.get("selleckchem")
     sigma = request.form.get("sigma")
     type = request.form.get("type")
+    session['type'] = type
     data={}
     role=[]
     brands=[] 
@@ -128,7 +130,6 @@ def result(user):
         return render_template('404.html'), 404
     else:
         
-
         if agonist == 'on':
             role.append ('AGONIST')
         if antagonist == 'on':
@@ -170,13 +171,13 @@ def result(user):
                     for result in search(query, tld="co.in", num=1, stop=1, pause=2):
                         link = result
                         activity[counter].append(link)
+                activity[counter].append('favourite'+str(counter))
                 counter += 1
-
             data['message']=activity
+            session['output']=activity
         except Exception as ex:
             data['message']=''
         return render_template('output_user.html', name=user, mol=data, brands=brands)
-
 
 @app.route('/<user>/favourites', methods=["POST", "GET"])
 def favourites(user):
@@ -185,7 +186,36 @@ def favourites(user):
     elif session['username']!=user:
         return render_template('404.html'), 404
     else:
-        return render_template('favourites.html', name=user)
+        sql="select um.molecule_chembl_id FROM user_has_molecule um WHERE um.user_user_id=\'%s\';" %(session['username'])
+        cursor=conection.connection.cursor() 
+        cursor.execute(sql)
+        favourites_mol=cursor.fetchall()
+        sql="select ut.target_uniprot_id FROM user_has_target ut WHERE ut.user_user_id=\'%s\';" %(session['username'])
+        cursor=conection.connection.cursor() 
+        cursor.execute(sql)
+        favourites_tar=cursor.fetchall()
+        cursor.close()
+
+        favourites = []
+        if favourites_mol:
+            for mol in favourites_mol:
+                sql="select m.name, m.chembl_id, m.type FROM molecule m WHERE m.chembl_id=\'%s\';" %(mol)
+                cursor=conection.connection.cursor() 
+                cursor.execute(sql)
+                info_mol=cursor.fetchall()
+                info_mol=[list(x) for x in info_mol]
+                favourites.append(info_mol)
+        if favourites_tar:
+            for tar in favourites_tar:
+                sql="select t.protein_name, t.uniprot_id, t.organism_taxa_id FROM target t WHERE t.uniprot_id=\'%s\';" %(tar)
+                cursor=conection.connection.cursor() 
+                cursor.execute(sql)
+                info_tar=cursor.fetchall()
+                info_tar=[list(x) for x in info_tar]
+                favourites.append(info_tar)
+        session['favs']=favourites
+        print(session['favs'])
+        return render_template('favourites.html', name=user, favs=favourites)
 
 
 
@@ -228,7 +258,49 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-    
+@app.route('/favourites_checkboxes/<info>')
+def fav_checkbox(info):
+    try:
+        brands=['Fisher Scientific','Selleckchem','Sigma-Aldrich']
+        print(info)
+        print('helo')
+        for i in range(0,len(session['output']),1):
+            print(i)
+            if session['output'][i][-1] == info:
+                username = session['username']
+                molecule_id = session['output'][i][0]
+                target_id = session['output'][i][2]
+                favourite = 'yes'
+                if session['type'] == 'molecule' or session['type']==None:
+                    sql='INSERT INTO user_has_molecule (user_user_id, molecule_chembl_id, favourite) VALUES (\'%s\',\'%s\',\'%s\');' %(username,molecule_id,favourite)
+                    cur=conection.connection.cursor()
+                    cur.execute(sql)
+                    conection.connection.commit()
+                if session['type'] == 'target':
+                    sql='INSERT INTO user_has_target (user_user_id, target_uniprot_id, favourite) VALUES (\'%s\',\'%s\',\'%s\');' %(username,target_id,favourite)
+                    cur=conection.connection.cursor()
+                    cur.execute(sql)
+                    conection.connection.commit()
+        print('hi')
+    except Exception:
+        pass
+    return redirect(url_for('favourites', user=session['username']))
+
+@app.route('/del_checkboxes/<info>')
+def del_checkbox(info):
+    if 'CHEMBL' in info:
+        sql='DELETE FROM user_has_molecule WHERE user_has_molecule.molecule_chembl_id=\'%s\';' %(info)
+        cur=conection.connection.cursor()
+        cur.execute(sql)
+        conection.connection.commit()
+    else:
+        sql='DELETE FROM user_has_target WHERE user_has_target.target_uniprot_id=\'%s\';' %(info)
+        cur=conection.connection.cursor()
+        cur.execute(sql)
+        conection.connection.commit()
+    return redirect(url_for('favourites', user=session['username']))
+
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -248,6 +320,7 @@ def signup():
                 
             
             else:
+                '''
                 try:
                     sql='SELECT email FROM user WHERE user.email=%s' %(email)
                     cur= conection.connection.cursor()
@@ -258,8 +331,8 @@ def signup():
                     flash('Sorry, email address or username already exists')
                     return render_template('signup.html')
 
-
-                except err:
+            '''
+                try:
                     sql='INSERT INTO user (user_id, first_name, last_name, email, password) VALUES (%s,%s,%s,%s,%s);' %(username,firstname,lastname,email,password)
                     cur=conection.connection.cursor()
                     err2=conection.connection.Error
@@ -268,9 +341,11 @@ def signup():
                     session['username']=username[1:-1]
                     session['email']=email[1:-1]
                     return redirect(url_for('user', user=username[1:-1]))
+                except Exception:
+                    pass
                 
         
-        except err2:
+        except Exception:
             flash('Sorry, email address or username already exists')
             return render_template('signup.html')
 

@@ -78,87 +78,6 @@
 {% endblock %}
 {% block body %}
 
-<style>
-     :root {
-        --color-blue: rgb(78, 101, 203);
-        --color-purple: rgb(113, 75, 128);
-        --color-pink: rgb(203, 66, 116);
-        --transition-time: 10ms;
-        --transition-ease: cubic-bezier(0.1, 0.7, 0.8, 0.3);
-      }
-      
-      .toggle {
-        display: flex;
-        width: 10%;
-        height: 10%;
-        place-items: center;
-        place-content: center;
-      }
-      
-      #heart-check {
-        visibility: hidden;
-      }
-      
-      #heart {
-        cursor: pointer;
-      }
-      #heart svg {
-        width: 50px;
-      }
-
-      #heart #initial {
-        stroke-width: 1.5;
-        stroke: var(--color-pink);
-        fill: transparent;
-      }
-      
-      #heart-check:checked + #heart #initial {
-        display: none;
-      }
-      #heart-check:checked + #heart #stroke {
-        animation: stroke var(--transition-time) var(--transition-ease);
-        animation-fill-mode: forwards;
-      }
-      
-      @keyframes heart {
-        from {
-          transform: scale(1);
-        }
-        78% {
-          transform: scale(1.25);
-        }
-        to {
-          transform: scale(1);
-        }
-      }
-      @keyframes stroke {
-        from {
-          stroke: var(--color-blue);
-          fill: transparent;
-        }
-        50% {
-          stroke: var(--color-purple);
-        }
-        85% {
-          fill: transparent;
-        }
-        to {
-          stroke-dashoffset: 0;
-          stroke: var(--color-pink);
-          fill: var(--color-pink);
-        }
-      }
-.fa-heart-o {
-  color: red;
-  cursor: pointer;
-}
-
-.fa-heart {
-  color: red;
-  cursor: pointer;
-}
-</style>
-
 <section class="bg-light">
   {% for v in mol %}
     {% if not mol[v] %}
@@ -170,7 +89,6 @@
           <br>
         </div>
     {% else %}
-    {% set h = namespace(t = 0) %}
       {% for r in mol[v] %}
         
           <div class="container my-1">
@@ -185,17 +103,11 @@
                                   <h3>{{ r[3]|capitalize }}</h3>
                                   
                               </div>
-                              <div class="col-auto me-3">
-                                <input type="checkbox" id="heart-check" name="{{  h.t  }}" value="{{ r[1] }}"> 
-                                                <label for="heart-check" id="heart">
-                                                    <svg viewBox="0 0 50 45" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                        <path id="initial" d="M11.8189091,20.3167303 C17.6981818,16.5505143 20.6378182,12.5122542 20.6378182,8.20195014 C20.6378182,5.99719437 18.8550242,4 16.3283829,4 C13.777264,4 12.5417153,6.29330284 11.8189091,6.29330284 C11.0961029,6.29330284 10.1317157,4 7.30943526,4 C4.90236126,4 3,5.64715533 3,8.20195014 C3,12.5122346 5.93963637,16.5504946 11.8189091,20.3167303 Z"></path>
-                                                        <path id="stroke" fill="none" d="M11.8189091,20.3167303 C17.6981818,16.5505143 20.6378182,12.5122542 20.6378182,8.20195014 C20.6378182,5.99719437 18.8550242,4 16.3283829,4 C13.4628072,4 10.284995,6.64162063 10.284995,8.70392731 C10.284995,10.0731789 10.8851209,10.9874447 11.8189091,10.9874447 C12.7526973,10.9874447 13.3528232,10.0731789 13.3528232,8.70392731 C13.3528232,6.64162063 10.1317157,4 7.30943526,4 C4.90236126,4 3,5.64715533 3,8.20195014 C3,12.5122346 5.93963637,16.5504946 11.8189091,20.3167303 Z"></path>
-                                                    </svg>
-                                                </label>
-                                {{  h.t  }}
-                              </div>
-                              {% set h.t = h.t + 1 %}                           
+                              
+                                <div class="col-auto me-3 mb-2">
+                                    <button style="background-color: transparent; border-color: transparent;"><a href="/favourites_checkboxes/{{ r[-1] }}"><img src="../static/icons/fav.png" style="width: 30px;"></img></a></button>
+                                </div>  
+                            
                           </div>    
                           <hr style="width: 98%;" class="mt-0 ms-2">
                           {% for i in range(0,brands|length) %}
@@ -208,6 +120,7 @@
                                   </div>
                                   <div class="col mb-2 ms-auto">
                                       <a href="{{ r[5+i] }}" target="_blank"><img style="height: 8%; width: 8%;" src="../static/icons/cart.png"/></a>
+
                                   </div>
                               </div>
                           {% endfor %}
@@ -222,4 +135,15 @@
   {% endfor %}
   
 {% endblock %}
+<script>
+  $(function () {
+    $(document).one("click", ".like-review", function (e) {
+      $(this).html(
+        '<i class="fa fa-heart" aria-hidden="true"></i> You liked this'
+      );
+      $(this).children(".fa-heart").addClass("animate-like");
+    });
+  });
+</script>
 </html>
+

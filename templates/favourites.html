@@ -41,66 +41,75 @@
 
 {% block body %}
         <!-- Icons Grid-->
-        <section class="features-icons bg-light">
-            <div class="container">
-                    <div class="row">
-                      <div class="col-lg-2 cb1">
-                        <h5 class="mb-3">Filters</h5>
-                        <hr style="width: 80%;" class="my-4">
-                
-                        <h6 class="mb-3">Activity</h6>
-
-                        <label>
-                            <input type="checkbox" value="agonist"> Agonist 
-                        </label>
-                        <p></p>
-                        <label>
-                            <input type="checkbox" value="antagonist"> Antagonist 
-                        </label>
-                          
-                        <hr style="width: 80%;" class="my-4">
-                        <h6 class="mb-3">Brand</h6>
-                
-                        <label>
-                            <input type="checkbox" value="fisher"> Fisher Scientific 
-                        </label>
-                        <p></p>
-                        <label>
-                            <input type="checkbox" value="selleckchem"> Selleckchem 
-                        </label>
-                        <p></p>
-                        <label>
-                            <input type="checkbox" value="sigma"> Sigma-Aldrich 
-                        </label>
-                        <br>
-                        <br>
-                        <br>
-                        </div>
-
-                        <div class="col-lg-10">
+        <div class="container my-1">
+            {% if not favs %}
+                <div class="container">
+                    <br>
+                    <br>
+                    <h5 class="text-center text-muted">Sorry, your favourites list is empty</h5>
+                    <br>
+                    <br>
+                </div>
+                {% else %}
                             <div class="modal-signin position-static" id="modalSignin">
                                 <div >
                                     <div class="modal-content rounded shadow">
                                         <label for="st1" class="offset-1 mt-3">
-                                            <h4><input class="me-2 cb2" type="checkbox" id="st1" value="1">Molecule/Target</h4> 
+                                            <h4 class="text-center">Favourites list</h4> 
                                         </label>
                                         <hr style="width: 98%;" class="my-7 ms-2">
-                                        <div class="row">
-                                            <div class="col ms-2">
-                                                <h6>Activity</h6>
+                                        <div class="row mt-2" style="align-items: center; align-content: center;">
+                                                <div class="col ms-4">
+                                                    <div class="row" style="align-items: center; align-content: center;">
+
+                                                        <h6>Name</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col ms-3">
+                                                    <div class="row" style="align-items: center; align-content: center;">
+                                                        <h6>ID</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col ms-3">
+                                                    <h6>Type</h6>
+                                                </div>
+                                                <div class="col ms-3">
+                                                    <h6></h6>
+                                                </div>
                                             </div>
-                                            <div class="col ms-2">
-                                                <h6>Brand</h6>
-                                            </div>
-                                            <div class="col me-sm-1">
-                                                <p>Link</p>
-                                            </div>
+                                        
+                                        {% for i in favs %}
+                                        <div class="row" style="align-items: center; align-content: center; justify-content: center;">
+
+                                            <div class="col ms-3">
+                                                    <div class="col mb-2">
+                                                        <h6>{{ i[0][0]| capitalize }}</h6>
+                                                    </div>
+                                            </div>                    
+                                            <div class="col ms-3">
+                                                   
+                                                        <div class="col mb-2">
+                                                            <h6>{{ i[0][1]| capitalize }}</h6>
+                                                        </div>
+                                            </div>            
+                                            <div class="col ms-3">
+                                                    <div class="col mb-2">
+                                                        <h6>{{ i[0][2]| capitalize }}</h6>
+                                                    </div>
+                                            </div>  
+                                            <div class="col ms-3 mb-2">        
+                                                    <button style="background-color: transparent; border-color: transparent;"><a href="/del_checkboxes/{{ i[0][1] }}"><img src="../static/icons/remove.png" style="width: 20px;"></img></a></button>       
+                                            </div>   
+                                        </div>            
+                                        {% endfor %}
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
         </section>
         
