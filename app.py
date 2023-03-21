@@ -8,9 +8,9 @@ from googlesearch import search
 app=Flask(__name__)
 
 #MySQL connection
-app.config['MYSQL_HOST']= 'localhost'
-app.config['MYSQL_USER']= 'root'
-app.config['MYSQL_PASSWORD']= 'Pamagon2000*'
+app.config['MYSQL_HOST']= 'searchemtool'
+app.config['MYSQL_USER']= 'searchemtool'
+app.config['MYSQL_PASSWORD']= 'dbw2o23'
 app.config['MYSQL_DB']= 'searchemtool'
 app.config['SECRET_KEY']='pedrosehacaido'
 app.config['PERMANENT_SESSION_LIFETIME']=timedelta(minutes=30)
