@@ -13,9 +13,9 @@ session.mount('https://', adapter)
 
 #Database connection
 database = "searchemtool";
-host = "localhost";
-user="root"; 
-passwd = "Raqpp00*";
+host = "searchemtool";
+user="searchemtool"; 
+passwd = "dbw2023";
 
 connection = pymysql.connect(host='localhost',
                 user=user,
