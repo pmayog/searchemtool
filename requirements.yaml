@@ -1,0 +1,27 @@
+name: u218065_searchemtool
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+    - mysqlclient
+    - bcrypt
+    - googlesearch
+    - pymysql
+    - urllib3
+    - flask
+    - flask-wtf
+    - flask-login
+    - flask-sqlalchemy
+    - flask-bcrypt
+    - email_validator
+    - flask-mail
+    - networkx
+    - matplotlib
+    - Werkzeug
+    - Biopython
+    - requests
+    - uwsgi
+    - pip
+    - pip:
+        - flask-mysqldb

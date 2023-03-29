@@ -7,8 +7,8 @@
 <!-- Navigation-->
 <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top" id="mainNav">
     <div class="container">
-        <a href="/"><img class="navbar-brand" src="../static/icons/modified_tranparent_logo.svg" width="114" height="70" alt="..." style="margin-left: 0%;"></img></a>
-        <a class="btn btn-primary" href="/signin">Sign In</a>
+        <a href="{{ url_for('index') }}"><img class="navbar-brand" src="{{ url_for('static', filename='icons/modified_tranparent_logo.png') }}" width="114" height="70" alt="..." style="margin-left: 0%;"></img></a>
+        <a class="btn btn-primary" href="{{ url_for('signin') }}">Sign In</a>
         </div>
     </div>
 </nav>
@@ -24,7 +24,7 @@
                     <!-- Page heading-->
                     <h1 class="mb-5">Searchem Tool</h1>
                     <!-- Signup form-->
-                    <form action="/results" method="post" class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                    <form action="{{ url_for('results') }}" method="post" class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
                         <!-- Email address input-->
                         <div class="row">
                             <div class="col">
@@ -103,7 +103,7 @@
                                         <h6>{{ brands[i] }}</h6>
                                     </div>
                                     <div class="col mb-2 ms-auto">
-                                        <a href="{{ r[5+i] }}" target="_blank"><img style="height: 8%; width: 8%;" src="../static/icons/cart.png"/></a>
+                                        <a href="{{ r[5+i] }}" target="_blank"><img style="height: 8%; width: 8%;" src="{{ url_for('static', filename='icons/cart.png') }}"/></a>
                                     </div>
                                 </div>
                             {% endfor %}
