@@ -6,8 +6,8 @@
 <!-- Navigation-->
 <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top" id="mainNav">
     <div class="container">
-        <a href="/"><img class="navbar-brand" src="../static/icons/modified_tranparent_logo.svg" width="114" height="70" alt="..." style="margin-left: 0%;"></img></a>
-        <a class="btn btn-primary" href="/signin">Sign In</a>
+        <a href="{{ url_for('index') }}"><img class="navbar-brand" src="{{ url_for('static', filename='icons/modified_tranparent_logo.png') }}" width="114" height="70" alt="..." style="margin-left: 0%;"></img></a>
+        <a class="btn btn-primary" href="{{ url_for('signin') }}">Sign In</a>
         </div>
     </div>
 </nav>
@@ -36,41 +36,41 @@
     <div class="container">
         <div class="modal-signin position-static d-block" id="modalSignin">
             <div class="row">
-                <div class="col-lg-4 my-1" href="../static/pdf/presentation1.pdf">
+                <div class="col-lg-4 my-1" href="{{ url_for('static', filename='pdf/presentation1.pdf') }}">
                     <div class="modal-content rounded shadow">
                         <label for="st1" class="offset-1 mt-3 row">
-                            <a href="../static/pdf/presentation1.pdf" class="text-center"><img src="../static/images/crop-transparent-logo.png" width="m-auto" height="90" alt="..."/></a>
+                            <a href="{{ url_for('static', filename='pdf/presentation1.pdf') }}" class="text-center"><img src="{{ url_for('static', filename='images/crop-transparent-logo.png') }}" width="m-auto" height="90" alt="..."/></a>
                         </label>
                         <div class="row">
                             <div class="col">
                                 <hr style="width: 100%;">
-                                <a href="../static/pdf/presentation1.pdf"><h4 style="color: #212529;"  class="text-center">January 18th: initial idea</h4></a>
+                                <a href="{{ url_for('static', filename='pdf/presentation1.pdf') }}"><h4 style="color: #212529;"  class="text-center">January 18th: initial idea</h4></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 my-1" href="../static/pdf/presentation1.pdf">
+                <div class="col-lg-4 my-1" href="{{ url_for('static', filename='pdf/presentation1.pdf') }}">
                     <div class="modal-content rounded shadow">
                         <label for="st1" class="offset-1 mt-3 row">
-                            <a href="../static/pdf/presentation1.pdf" class="text-center"><img src="../static/images/db.png" width="m-auto" height="90" alt="..."/></a>
+                            <a href="{{ url_for('static', filename='pdf/presentation1.pdf') }}" class="text-center"><img src="{{ url_for('static', filename='images/db.png') }}" width="m-auto" height="90" alt="..."/></a>
                         </label>
                         <div class="row">
                             <div class="col">
                                 <hr style="width: 100%;">
-                                <a href="../static/pdf/presentation1.pdf"><h4 style="color: #212529;"  class="text-center">January 30th: database proposition</h4></a>
+                                <a href="{{ url_for('static', filename='pdf/presentation1.pdf') }}"><h4 style="color: #212529;"  class="text-center">January 30th: database proposition</h4></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 my-1" href="../static/pdf/presentation1.pdf">
+                <div class="col-lg-4 my-1" href="{{ url_for('static', filename='pdf/presentation1.pdf') }}">
                     <div class="modal-content rounded shadow">
                         <label for="st1" class="offset-1 mt-3 row">
-                            <a href="../static/pdf/presentation1.pdf" class="text-center"><img src="../static/images/web.png" width="m-auto" height="90" alt="..."/></a>
+                            <a href="{{ url_for('static', filename='pdf/presentation1.pdf') }}" class="text-center"><img src="{{ url_for('static', filename='images/web.png') }}" width="m-auto" height="90" alt="..."/></a>
                         </label>
                         <div class="row">
                             <div class="col">
                                 <hr style="width: 100%;">
-                                <a href="../static/pdf/presentation1.pdf"><h4 style="color: #212529;"  class="text-center">February 6th: first draft</h4></a>
+                                <a href="{{ url_for('static', filename='pdf/presentation1.pdf') }}"><h4 style="color: #212529;"  class="text-center">February 6th: first draft</h4></a>
                             </div>
                         </div>
                     </div>

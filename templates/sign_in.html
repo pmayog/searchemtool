@@ -8,13 +8,13 @@
     <meta name="generator" content="Hugo 0.108.0">
     <title>Sign In</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="../static/icons/sign_in.svg" />
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icons/sign_in.svg') }}" />
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/modals/"> 
 
   
 
-<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -109,7 +109,7 @@
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign in</button>
                     <hr class="my-4">
                   </form>
-                  <u><a class="nav-link" href="/signup">Or Sign up here</a></u>
+                  <u><a class="nav-link" href="{{ url_for('signup') }}">Or Sign up here</a></u>
                   <p class="mt-5 mb-3 text-muted">Copyright &copy; Searchem Tool 2023</p>
 
                 </div>

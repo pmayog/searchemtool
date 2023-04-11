@@ -3,6 +3,8 @@ from flask_mysqldb import MySQL
 import bcrypt
 from datetime import datetime, timedelta
 from googlesearch import search
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.exceptions import NotFound
 
 
 app=Flask(__name__)
@@ -14,6 +16,19 @@ app.config['MYSQL_PASSWORD']= 'dbw2o23'
 app.config['MYSQL_DB']= 'searchemtool'
 app.config['SECRET_KEY']='pedrosehacaido'
 app.config['PERMANENT_SESSION_LIFETIME']=timedelta(minutes=30)
+
+hostedApp=Flask(__name__)
+
+#MySQL connection
+hostedApp.config['MYSQL_HOST']= 'searchemtool'
+hostedApp.config['MYSQL_USER']= 'searchemtool'
+hostedApp.config['MYSQL_PASSWORD']= 'dbw2o23'
+hostedApp.config['MYSQL_DB']= 'searchemtool'
+hostedApp.config['SECRET_KEY']='pedrosehacaido'
+hostedApp.config['PERMANENT_SESSION_LIFETIME']=timedelta(minutes=30)
+
+
+
 global COOKIE_TIME_OUT  
 
 conection = MySQL(app)
@@ -361,8 +376,11 @@ def query_string():
     return "OK"
 
 
+hostedApp.wsgi_app = DispatcherMiddleware(NotFound(), {f"/u218065/searchemtool":app})
+
+
 if __name__=='__main__':
-    app.add_url_rule('/query_string', view_func=query_string)
-    app.register_error_handler(404, page_not_found)
-    app.register_error_handler(405, method_not_allowed)
-    app.run(debug=True,port=5000)
+    hostedApp.add_url_rule('/query_string', view_func=query_string)
+    hostedApp.register_error_handler(404, page_not_found)
+    hostedApp.register_error_handler(405, method_not_allowed)
+    hostedApp.run(debug=True, port=5000)
